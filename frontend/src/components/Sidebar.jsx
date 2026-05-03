@@ -21,7 +21,7 @@ export default function Sidebar({ activePage, setActivePage, onLogout }) {
     <aside className="sidebar">
       <div>
         <div className="brand">
-          <div className="brand-icon">LK</div>
+          <img src="/logo.png" alt="Fretlome" className="brand-logo" />
           <div>
             <h1>Relais Colis</h1>
             <p>Suivi terrain</p>

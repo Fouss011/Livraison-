@@ -630,7 +630,7 @@ function PublicHome() {
   return (
     <main className="public-page">
       <div className="public-header">
-        <div className="brand-icon">LK</div>
+        <img src="/logo.png" alt="Fretlome" className="public-logo" />
         <div>
           <h1>Espace client</h1>
           <p>Suivez votre colis ou demandez un envoi.</p>
@@ -675,7 +675,7 @@ export default function App() {
   ← Retour
 </button>
       <div className="public-header">
-        <div className="brand-icon">LK</div>
+        <img src="/logo.png" alt="Fretlome" className="public-logo" />
         <div>
           <h1>Suivi de colis</h1>
           <p>Entrez votre code colis ou téléphone destinataire.</p>
@@ -693,7 +693,7 @@ if (isPublicRequest) {
   ← Retour
 </button>
       <div className="public-header">
-        <div className="brand-icon">LK</div>
+        <img src="/logo.png" alt="Fretlome" className="public-logo" />
         <div>
           <h1>Envoyer un colis</h1>
           <p>Remplissez le formulaire, un agent vous contactera.</p>

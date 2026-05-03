@@ -1,0 +1,16 @@
+{
+  "name": "Fretlome",
+  "short_name": "Fretlome",
+  "description": "Suivi et demande d’envoi de colis",
+  "start_url": "/client",
+  "display": "standalone",
+  "background_color": "#fffaf2",
+  "theme_color": "#263626",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
