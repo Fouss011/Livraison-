@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:4000/api";
+const API_URL = "https://backend-winter-ridge-1450.fly.dev/api";
 
 export function getToken() {
   return localStorage.getItem("delivery_token");
