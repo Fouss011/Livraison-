@@ -5,8 +5,8 @@ import StatusBadge from "./components/StatusBadge";
 import "./App.css";
 
 function Login({ onLogin }) {
-  const [email, setEmail] = useState("admin@test.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -154,13 +154,27 @@ function Parcels() {
         status,
         current_location:
           status === "in_transit"
-            ? "Route Lomé-Kpalimé"
+            ? "En route"
             : status === "available"
             ? parcel.arrival_city
             : parcel.current_location
       });
 
       setMessage("Statut mis à jour.");
+      load();
+    } catch (err) {
+      setMessage(err.message);
+    }
+  }
+
+  async function deleteParcel(parcel) {
+    const ok = window.confirm(`Supprimer le colis ${parcel.code} ?`);
+
+    if (!ok) return;
+
+    try {
+      await api.deleteParcel(parcel.id);
+      setMessage("Colis supprimé.");
       load();
     } catch (err) {
       setMessage(err.message);
@@ -212,6 +226,7 @@ function Parcels() {
             <StatusBadge status={parcel.status} />
 
             <div className="row-actions">
+              {/* Appel */}
               <a
                 className="call-btn"
                 href={`tel:${parcel.receiver_phone}`}
@@ -219,21 +234,25 @@ function Parcels() {
                 Appeler
               </a>
 
+              {/* WhatsApp */}
               <a
                 className="whatsapp"
-                href={`https://wa.me/228${parcel.receiver_phone}`}
+                href={`https://wa.me/228${parcel.receiver_phone}?text=Bonjour%20votre%20colis%20${parcel.code}%20est%20disponible`}
                 target="_blank"
               >
                 WhatsApp
               </a>
-              <a
-  className="secondary-btn"
-  href="http://localhost:5173/suivi"
-  target="_blank"
->
-  Lien client
-</a>
 
+              {/* Lien client */}
+              <a
+                className="secondary-btn"
+                href={`${window.location.origin}/suivi`}
+                target="_blank"
+              >
+                Lien client
+              </a>
+
+              {/* Statuts */}
               <button onClick={() => changeStatus(parcel, "in_transit")}>
                 Transit
               </button>
@@ -244,6 +263,14 @@ function Parcels() {
 
               <button onClick={() => changeStatus(parcel, "delivered")}>
                 Livré
+              </button>
+
+              {/* SUPPRESSION */}
+              <button
+                className="danger-btn"
+                onClick={() => deleteParcel(parcel)}
+              >
+                Supprimer
               </button>
             </div>
           </div>

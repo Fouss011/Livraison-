@@ -299,6 +299,31 @@ async function trackParcelPublic(req, res) {
   }
 }
 
+async function deleteParcel(req, res) {
+  try {
+    const { id } = req.params;
+
+    const { error } = await supabase
+      .from("parcels")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return res.status(400).json({
+        message: "Impossible de supprimer le colis.",
+        details: error.message
+      });
+    }
+
+    return res.json({ message: "Colis supprimé avec succès." });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Erreur serveur pendant la suppression.",
+      details: error.message
+    });
+  }
+}
+
 module.exports = {
   createParcel,
   getParcels,
@@ -306,5 +331,6 @@ module.exports = {
   updateParcelStatus,
   getAvailableParcels,
   getDashboardStats,
-  trackParcelPublic
+  trackParcelPublic,
+  deleteParcel
 };

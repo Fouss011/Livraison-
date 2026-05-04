@@ -33,5 +33,11 @@ router.patch(
   requireRoles("admin", "agent_depart", "agent_arrivee"),
   updateParcelStatus
 );
+router.delete(
+  "/:id",
+  authMiddleware,
+  requireRoles("admin"),
+  deleteParcel
+);
 
 module.exports = router;

@@ -1043,3 +1043,13 @@ section h2 {
     grid-template-columns: 1fr;
   }
 }
+
+.danger-btn {
+  background: #b91c1c;
+  color: white;
+  border: none;
+}
+
+.danger-btn:hover {
+  background: #7f1d1d;
+}

@@ -79,6 +79,10 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify(payload)
     }),
+    deleteParcel: (id) =>
+  request(`/parcels/${id}`, {
+    method: "DELETE"
+  }),
 
     trackParcelPublic: (search) =>
   request(`/parcels/track/public?search=${encodeURIComponent(search)}`),
