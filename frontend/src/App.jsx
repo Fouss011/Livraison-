@@ -655,6 +655,7 @@ function PublicHome() {
 export default function App() {
   const [user, setUser] = useState(getStoredUser());
   const [activePage, setActivePage] = useState("dashboard");
+  const [menuOpen, setMenuOpen] = useState(false);
   
   const isPublicTracking = window.location.pathname === "/suivi";
   const isPublicRequest = window.location.pathname === "/demande";
@@ -711,7 +712,23 @@ if (isPublicHome) {
 
   return (
     <div className="app-layout">
-      <Sidebar activePage={activePage} setActivePage={setActivePage} onLogout={logout} />
+      <button className="mobile-menu-btn" onClick={() => setMenuOpen(true)}>
+  ☰ Menu
+</button>
+
+{menuOpen && (
+  <div className="mobile-overlay" onClick={() => setMenuOpen(false)} />
+)}
+
+<Sidebar
+  activePage={activePage}
+  setActivePage={(page) => {
+    setActivePage(page);
+    setMenuOpen(false);
+  }}
+  onLogout={logout}
+  menuOpen={menuOpen}
+/>
 
       <main className="main-content">
         <div className="topbar">

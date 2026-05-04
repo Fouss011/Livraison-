@@ -7,7 +7,7 @@ import {
   LogOut
 } from "lucide-react";
 
-export default function Sidebar({ activePage, setActivePage, onLogout }) {
+export default function Sidebar({ activePage, setActivePage, onLogout, menuOpen }) {
   const items = [
     { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { key: "parcels", label: "Colis", icon: Package },
@@ -18,7 +18,7 @@ export default function Sidebar({ activePage, setActivePage, onLogout }) {
   ];
 
   return (
-    <aside className="sidebar">
+    <aside className={menuOpen ? "sidebar open" : "sidebar"}>
       <div>
         <div className="brand">
           <img src="/logo.png" alt="Fretlome" className="brand-logo" />
