@@ -629,24 +629,54 @@ function ClientTracking() {
 function PublicHome() {
   return (
     <main className="public-page">
-      <div className="public-header">
+      <div className="public-header client-hero">
         <img src="/logo.png" alt="Fretlome" className="public-logo" />
         <div>
-          <h1>Espace client</h1>
-          <p>Suivez votre colis ou demandez un envoi.</p>
+          <h1>Fretlome</h1>
+          <p>Votre solution simple pour suivre ou demander l’envoi d’un colis.</p>
         </div>
       </div>
+
+      <section className="client-intro">
+        <h2>Livraison et suivi de colis</h2>
+        <p>
+          Suivez l’avancement de votre colis entre le point de départ et le point
+          d’arrivée, ou envoyez une demande pour être recontacté par un agent.
+        </p>
+      </section>
 
       <section className="public-choice">
         <button onClick={() => (window.location.href = "/suivi")}>
           <span className="choice-icon">📦</span>
           <span>Suivre mon colis</span>
+          <small>J’ai déjà un code colis ou un numéro destinataire.</small>
         </button>
 
         <button onClick={() => (window.location.href = "/demande")}>
           <span className="choice-icon">📝</span>
           <span>Envoyer un colis</span>
+          <small>Je veux être contacté pour organiser un envoi.</small>
         </button>
+      </section>
+
+      <section className="client-steps">
+        <div>
+          <strong>1</strong>
+          <h3>Enregistrement</h3>
+          <p>Le colis est enregistré au point de départ avec un code unique.</p>
+        </div>
+
+        <div>
+          <strong>2</strong>
+          <h3>Transit</h3>
+          <p>Le statut est mis à jour pendant le déplacement du colis.</p>
+        </div>
+
+        <div>
+          <strong>3</strong>
+          <h3>Disponibilité</h3>
+          <p>Le destinataire peut être contacté dès l’arrivée du colis.</p>
+        </div>
       </section>
     </main>
   );
