@@ -3,8 +3,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 const requireRoles = require("../middleware/roleMiddleware");
 const {
   createParcel,
-  geconst {
-  createParcel,
   getParcels,
   getParcelById,
   updateParcelStatus,

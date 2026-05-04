@@ -714,9 +714,10 @@ export default function App() {
   const [activePage, setActivePage] = useState("dashboard");
   const [menuOpen, setMenuOpen] = useState(false);
   
+  const isPublicHome = window.location.pathname === "/client";
   const isPublicTracking = window.location.pathname === "/suivi";
   const isPublicRequest = window.location.pathname === "/demande";
-  const isPublicHome = window.location.pathname === "/client";
+  
   
 
   function logout() {
@@ -724,7 +725,11 @@ export default function App() {
     setUser(null);
   }
 
-  if (!user) return <Login onLogin={setUser} />;
+  
+
+  if (isPublicHome) {
+  return <PublicHome />;
+}
 
   if (isPublicTracking) {
   return (
@@ -763,9 +768,8 @@ if (isPublicRequest) {
   );
 }
 
-if (isPublicHome) {
-  return <PublicHome />;
-}
+if (!user) return <Login onLogin={setUser} />;
+
 
   return (
     <div className="app-layout">
