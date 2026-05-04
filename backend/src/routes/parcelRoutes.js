@@ -3,12 +3,15 @@ const authMiddleware = require("../middleware/authMiddleware");
 const requireRoles = require("../middleware/roleMiddleware");
 const {
   createParcel,
+  geconst {
+  createParcel,
   getParcels,
   getParcelById,
   updateParcelStatus,
   getAvailableParcels,
   getDashboardStats,
-  trackParcelPublic
+  trackParcelPublic,
+  deleteParcel
 } = require("../controllers/parcelController");
 
 const router = express.Router();
