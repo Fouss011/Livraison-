@@ -30,8 +30,8 @@ function Login({ onLogin }) {
     <main className="login-page">
       <form className="login-card" onSubmit={handleSubmit}>
         <div className="login-logo">LK</div>
-        <h1>Colis Relais</h1>
-        <p>Gestion simple des colis Lomé–Kpalimé</p>
+        <h1>Fretlome Admin</h1>
+        <p>Espace privé de gestion des colis</p>
 
         {error && <div className="alert error">{error}</div>}
 
@@ -59,17 +59,20 @@ function Dashboard() {
 
   useEffect(() => {
     api.getStats().then((data) => setStats(data.stats)).catch(console.error);
-    api.getParcels().then((data) => setParcels(data.parcels.slice(0, 5))).catch(console.error);
+    api
+      .getParcels()
+      .then((data) => setParcels(data.parcels.slice(0, 5)))
+      .catch(console.error);
   }, []);
 
   if (!stats) return <p>Chargement...</p>;
 
   const cards = [
-  ["Total colis", stats.total, "Tous statuts confondus"],
-  ["En transit", stats.in_transit, "Colis en cours"],
-  ["Disponibles", stats.available, "Prêts à être retirés"],
-  ["Livrés", stats.delivered, "Livrés avec succès"]
-];
+    ["Total colis", stats.total, "Tous statuts confondus"],
+    ["En transit", stats.in_transit, "Colis en cours"],
+    ["Disponibles", stats.available, "Prêts à être retirés"],
+    ["Livrés", stats.delivered, "Livrés avec succès"]
+  ];
 
   return (
     <section className="dashboard-page">
@@ -112,9 +115,19 @@ function Dashboard() {
           {parcels.map((parcel) => (
             <div className="recent-table-row" key={parcel.id}>
               <span>{parcel.code}</span>
-              <span>{parcel.sender_name}<br /><small>{parcel.sender_phone}</small></span>
-              <span>{parcel.receiver_name}<br /><small>{parcel.receiver_phone}</small></span>
-              <span>{parcel.departure_city} → {parcel.arrival_city}</span>
+              <span>
+                {parcel.sender_name}
+                <br />
+                <small>{parcel.sender_phone}</small>
+              </span>
+              <span>
+                {parcel.receiver_name}
+                <br />
+                <small>{parcel.receiver_phone}</small>
+              </span>
+              <span>
+                {parcel.departure_city} → {parcel.arrival_city}
+              </span>
               <StatusBadge status={parcel.status} />
             </div>
           ))}
@@ -169,7 +182,6 @@ function Parcels() {
 
   async function deleteParcel(parcel) {
     const ok = window.confirm(`Supprimer le colis ${parcel.code} ?`);
-
     if (!ok) return;
 
     try {
@@ -226,15 +238,10 @@ function Parcels() {
             <StatusBadge status={parcel.status} />
 
             <div className="row-actions">
-              {/* Appel */}
-              <a
-                className="call-btn"
-                href={`tel:${parcel.receiver_phone}`}
-              >
+              <a className="call-btn" href={`tel:${parcel.receiver_phone}`}>
                 Appeler
               </a>
 
-              {/* WhatsApp */}
               <a
                 className="whatsapp"
                 href={`https://wa.me/228${parcel.receiver_phone}?text=Bonjour%20votre%20colis%20${parcel.code}%20est%20disponible`}
@@ -243,7 +250,6 @@ function Parcels() {
                 WhatsApp
               </a>
 
-              {/* Lien client */}
               <a
                 className="secondary-btn"
                 href={`${window.location.origin}/suivi`}
@@ -252,7 +258,6 @@ function Parcels() {
                 Lien client
               </a>
 
-              {/* Statuts */}
               <button onClick={() => changeStatus(parcel, "in_transit")}>
                 Transit
               </button>
@@ -265,7 +270,6 @@ function Parcels() {
                 Livré
               </button>
 
-              {/* SUPPRESSION */}
               <button
                 className="danger-btn"
                 onClick={() => deleteParcel(parcel)}
@@ -307,6 +311,7 @@ function NewParcel() {
     try {
       const data = await api.createParcel(form);
       setMessage(`Colis créé avec succès : ${data.parcel.code}`);
+
       setForm({
         sender_name: "",
         sender_phone: "",
@@ -330,14 +335,47 @@ function NewParcel() {
       {message && <div className="alert">{message}</div>}
 
       <form className="form-card" onSubmit={submit}>
-        <input placeholder="Nom expéditeur" value={form.sender_name} onChange={(e) => update("sender_name", e.target.value)} />
-        <input placeholder="Téléphone expéditeur" value={form.sender_phone} onChange={(e) => update("sender_phone", e.target.value)} />
-        <input placeholder="Nom destinataire" value={form.receiver_name} onChange={(e) => update("receiver_name", e.target.value)} />
-        <input placeholder="Téléphone destinataire" value={form.receiver_phone} onChange={(e) => update("receiver_phone", e.target.value)} />
-        <input placeholder="Ville départ" value={form.departure_city} onChange={(e) => update("departure_city", e.target.value)} />
-        <input placeholder="Ville arrivée" value={form.arrival_city} onChange={(e) => update("arrival_city", e.target.value)} />
-        <input placeholder="Prix livraison" type="number" value={form.delivery_price} onChange={(e) => update("delivery_price", e.target.value)} />
-        <textarea placeholder="Description du colis" value={form.description} onChange={(e) => update("description", e.target.value)} />
+        <input
+          placeholder="Nom expéditeur"
+          value={form.sender_name}
+          onChange={(e) => update("sender_name", e.target.value)}
+        />
+        <input
+          placeholder="Téléphone expéditeur"
+          value={form.sender_phone}
+          onChange={(e) => update("sender_phone", e.target.value)}
+        />
+        <input
+          placeholder="Nom destinataire"
+          value={form.receiver_name}
+          onChange={(e) => update("receiver_name", e.target.value)}
+        />
+        <input
+          placeholder="Téléphone destinataire"
+          value={form.receiver_phone}
+          onChange={(e) => update("receiver_phone", e.target.value)}
+        />
+        <input
+          placeholder="Ville départ"
+          value={form.departure_city}
+          onChange={(e) => update("departure_city", e.target.value)}
+        />
+        <input
+          placeholder="Ville arrivée"
+          value={form.arrival_city}
+          onChange={(e) => update("arrival_city", e.target.value)}
+        />
+        <input
+          placeholder="Prix livraison"
+          type="number"
+          value={form.delivery_price}
+          onChange={(e) => update("delivery_price", e.target.value)}
+        />
+        <textarea
+          placeholder="Description du colis"
+          value={form.description}
+          onChange={(e) => update("description", e.target.value)}
+        />
 
         <button>Enregistrer le colis</button>
       </form>
@@ -349,7 +387,10 @@ function AvailableParcels() {
   const [parcels, setParcels] = useState([]);
 
   useEffect(() => {
-    api.getAvailableParcels().then((data) => setParcels(data.parcels)).catch(console.error);
+    api
+      .getAvailableParcels()
+      .then((data) => setParcels(data.parcels))
+      .catch(console.error);
   }, []);
 
   return (
@@ -363,10 +404,18 @@ function AvailableParcels() {
             <div>
               <strong>{parcel.code}</strong>
               <p>{parcel.description}</p>
-              <small>{parcel.receiver_name} — {parcel.receiver_phone}</small>
+              <small>
+                {parcel.receiver_name} — {parcel.receiver_phone}
+              </small>
             </div>
+
             <StatusBadge status={parcel.status} />
-            <a className="whatsapp" href={`https://wa.me/228${parcel.receiver_phone}`} target="_blank">
+
+            <a
+              className="whatsapp"
+              href={`https://wa.me/228${parcel.receiver_phone}`}
+              target="_blank"
+            >
               WhatsApp
             </a>
           </div>
@@ -485,7 +534,9 @@ function PublicRequest() {
 
     try {
       await api.createPublicRequest(form);
-      setMessage("Demande envoyée avec succès. Un agent pourra recontacter le client.");
+      setMessage(
+        "Demande envoyée avec succès. Un agent vous contactera rapidement."
+      );
 
       setForm({
         name: "",
@@ -502,9 +553,9 @@ function PublicRequest() {
 
   return (
     <section>
-      <h2>Demande client</h2>
+      <h2>Demande d’envoi</h2>
       <p className="page-subtitle">
-        Formulaire simple pour les personnes qui ont un colis à envoyer.
+        Remplissez ce formulaire pour être recontacté par un agent.
       </p>
 
       {message && <div className="alert">{message}</div>}
@@ -713,89 +764,104 @@ export default function App() {
   const [user, setUser] = useState(getStoredUser());
   const [activePage, setActivePage] = useState("dashboard");
   const [menuOpen, setMenuOpen] = useState(false);
-  
-  const isPublicHome = window.location.pathname === "/client";
-  const isPublicTracking = window.location.pathname === "/suivi";
-  const isPublicRequest = window.location.pathname === "/demande";
-  
-  
+
+  const path = window.location.pathname;
+
+  const isPublicHome = path === "/" || path === "/client";
+  const isPublicTracking = path === "/suivi";
+  const isPublicRequest = path === "/demande";
+  const isAdmin = path === "/admin";
 
   function logout() {
     clearSession();
     setUser(null);
   }
 
-  
-
   if (isPublicHome) {
-  return <PublicHome />;
-}
+    return <PublicHome />;
+  }
 
   if (isPublicTracking) {
-  return (
-    <main className="public-page">
-      <button className="back-home-btn" onClick={() => (window.location.href = "/client")}>
-  ← Retour
-</button>
-      <div className="public-header">
-        <img src="/logo.png" alt="Fretlome" className="public-logo" />
-        <div>
-          <h1>Suivi de colis</h1>
-          <p>Entrez votre code colis ou téléphone destinataire.</p>
+    return (
+      <main className="public-page">
+        <button
+          className="back-home-btn"
+          onClick={() => (window.location.href = "/")}
+        >
+          ← Retour
+        </button>
+
+        <div className="public-header">
+          <img src="/logo.png" alt="Fretlome" className="public-logo" />
+          <div>
+            <h1>Suivi de colis</h1>
+            <p>Entrez votre code colis ou téléphone destinataire.</p>
+          </div>
         </div>
-      </div>
 
-      <ClientTracking />
-    </main>
-  );
-}
-if (isPublicRequest) {
-  return (
-    <main className="public-page">
-      <button className="back-home-btn" onClick={() => (window.location.href = "/client")}>
-  ← Retour
-</button>
-      <div className="public-header">
-        <img src="/logo.png" alt="Fretlome" className="public-logo" />
-        <div>
-          <h1>Envoyer un colis</h1>
-          <p>Remplissez le formulaire, un agent vous contactera.</p>
+        <ClientTracking />
+      </main>
+    );
+  }
+
+  if (isPublicRequest) {
+    return (
+      <main className="public-page">
+        <button
+          className="back-home-btn"
+          onClick={() => (window.location.href = "/")}
+        >
+          ← Retour
+        </button>
+
+        <div className="public-header">
+          <img src="/logo.png" alt="Fretlome" className="public-logo" />
+          <div>
+            <h1>Envoyer un colis</h1>
+            <p>Remplissez le formulaire, un agent vous contactera.</p>
+          </div>
         </div>
-      </div>
 
-      <PublicRequest />
-    </main>
-  );
-}
+        <PublicRequest />
+      </main>
+    );
+  }
 
-if (!user) return <Login onLogin={setUser} />;
+  if (!isAdmin) {
+    return <PublicHome />;
+  }
 
+  if (!user) {
+    return <Login onLogin={setUser} />;
+  }
 
   return (
     <div className="app-layout">
       <button className="mobile-menu-btn" onClick={() => setMenuOpen(true)}>
-  ☰ Menu
-</button>
+        ☰ Menu
+      </button>
 
-{menuOpen && (
-  <div className="mobile-overlay" onClick={() => setMenuOpen(false)} />
-)}
+      {menuOpen && (
+        <div className="mobile-overlay" onClick={() => setMenuOpen(false)} />
+      )}
 
-<Sidebar
-  activePage={activePage}
-  setActivePage={(page) => {
-    setActivePage(page);
-    setMenuOpen(false);
-  }}
-  onLogout={logout}
-  menuOpen={menuOpen}
-/>
+      <Sidebar
+        activePage={activePage}
+        setActivePage={(page) => {
+          setActivePage(page);
+          setMenuOpen(false);
+        }}
+        onLogout={logout}
+        menuOpen={menuOpen}
+      />
 
       <main className="main-content">
         <div className="topbar">
           <div>
             <h1>Bonjour, {user.name}</h1>
-            <p>{user.role} — hub {user.hub}</p>
+            <p>
+              {user.role} — hub {user.hub}
+            </p>
           </div>
         </div>
 
