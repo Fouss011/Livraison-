@@ -770,6 +770,7 @@ export default function App() {
   const isPublicHome = path === "/" || path === "/client";
   const isPublicTracking = path === "/suivi";
   const isPublicRequest = path === "/demande";
+  const isPrivacyPolicy = path === "/privacy-policy";
   const isAdmin = path === "/admin";
 
   function logout() {
@@ -803,6 +804,68 @@ export default function App() {
       </main>
     );
   }
+
+  if (isPrivacyPolicy) {
+  return (
+    <main className="public-page">
+      <button
+        className="back-home-btn"
+        onClick={() => (window.location.href = "/")}
+      >
+        ← Retour
+      </button>
+
+      <section className="privacy-card">
+        <h1>Politique de confidentialité</h1>
+        <p><strong>Dernière mise à jour :</strong> 20 juin 2026</p>
+
+        <h2>1. Présentation</h2>
+        <p>
+          Fretlome est une application de suivi et de demande d’envoi de colis.
+          Elle permet aux utilisateurs de suivre un colis ou d’envoyer une
+          demande afin d’être recontactés par un agent.
+        </p>
+
+        <h2>2. Données collectées</h2>
+        <p>
+          L’application peut collecter les informations suivantes : nom,
+          numéro de téléphone, ville de départ, ville d’arrivée, description du
+          colis et code de suivi.
+        </p>
+
+        <h2>3. Utilisation des données</h2>
+        <p>
+          Les données sont utilisées uniquement pour gérer les demandes d’envoi,
+          suivre les colis et contacter les utilisateurs dans le cadre du service.
+        </p>
+
+        <h2>4. Partage des données</h2>
+        <p>
+          Fretlome ne vend pas les données personnelles des utilisateurs et ne
+          les partage pas avec des tiers à des fins publicitaires.
+        </p>
+
+        <h2>5. Sécurité</h2>
+        <p>
+          Les échanges avec l’application sont protégés par HTTPS lorsque le
+          service est utilisé en ligne.
+        </p>
+
+        <h2>6. Suppression des données</h2>
+        <p>
+          Les utilisateurs peuvent demander la suppression de leurs données en
+          contactant l’éditeur de l’application.
+        </p>
+
+        <h2>7. Contact</h2>
+        <p>
+          Pour toute demande liée à la confidentialité ou à la suppression des
+          données, contactez-nous à : foaniss@gmail.com
+        </p>
+      </section>
+    </main>
+  );
+}
 
   if (isPublicRequest) {
     return (
