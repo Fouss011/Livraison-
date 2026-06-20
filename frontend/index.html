@@ -1,32 +1,20 @@
-:root {
-  font-family: Arial, Helvetica, sans-serif;
-  color: #203020;
-  background: #f5efe4;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
 
-* {
-  box-sizing: border-box;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#263626" />
 
-body {
-  overflow-x: hidden;
-}
+  <!-- Logo utilisé comme icône -->
+  <link rel="icon" type="image/png" href="/logo.png" />
 
-button,
-input,
-textarea {
-  font-family: inherit;
-}
+  <title>Fretlome</title>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
